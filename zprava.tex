@@ -1,0 +1,129 @@
+\documentstyle[epsf,epic,eepic,eepicemu]{article} \oddsidemargin=-5mm
+\evensidemargin=-5mm\marginparwidth=.08in \marginparsep=.01in
+\marginparpush=5pt\topmargin=-15mm\headheight=12pt
+\headsep=25pt\footheight=12pt \footskip=30pt\textheight=25cm
+\textwidth=17cm\columnsep=2mm
+\columnseprule=1pt\parindent=15pt\parskip=2pt
+
+\begin{document}
+\begin{center}
+\bf Semestralni projekt PAR 2001/2002:\\[5mm]
+    Paralelni algoritmus pro reseni problemu\\[5mm] 
+       Jmeno1 Prijmeni1\\
+       Jmeno2 Prijmeni2\\[2mm]
+5. rocnik, obor pocitace, K336 FEL CVUT, Karlovo nam. 13, 121 35 Praha 2\\[2mm]
+\today
+\end{center}
+
+\section{Definice problemu a popis sekvencniho algoritmu}
+
+Popiste problem, ktery vas program resi. Jako vychozi pouzijte text
+zadani, ktery rozsirte o presne vymezeni vsech odchylek, ktere jste
+vuci zadani behem implementace provedli 
+(napr.  upravy heuristicke funkce, organizace zasobniku,
+apod.). Zminte i pripadne i takove prvky algoritmu, ktere v zadani
+nebyly specifikovany, ale ktere se ukazaly jako dulezite.  Dale
+popiste vstupy a vystupy algoritmu (format vstupnich a vystupnich
+dat). Uvedte tabulku namerenych casu sekvencniho algoritmu pro ruzne
+velka data.
+
+\section{Popis paralelniho algoritmu a jeho implementace v MPI}
+
+Popiste paralelni algoritmus, opet vyjdete ze zadani a presne vymezte
+odchylky, zvlaste u algoritmu pro vyvazovani zateze, hledani darce, ci
+ukonceni vypoctu.  Popiste a vysvetlete strukturu celkoveho
+paralelniho algoritmu na urovni procesuu v MPI a strukturu kodu
+jednotlivych procesu. Napr. jak je naimplemtovana smycka pro cinnost
+procesu v aktivnim stavu i v stavu necinnosti. Jake jste zvolili
+konstanty a parametry pro skalovani algoritmu. Struktura a semantika
+prikazove radky pro spousteni programu.
+
+\section{Namerene vysledky a vyhodnoceni}
+
+\begin{enumerate}
+\item Zvolte tri instance problemu s takovou velikosti vstupnich dat, pro ktere ma sekvencni 
+algoritmus casovou slozitost kolem 5, 10 a 15 minut.
+Pro mereni cas potrebny na cteni dat z disku a ulozeni na disk neuvazujte a zakomentujte
+ladici tisky, logy, zpravy a vystupy.
+\item Merte paralelni cas pri pouziti $i=2,\cdot,24$ procesoru na sitich Ethernet a InfiniBand.
+%\item Pri mereni kazde instance problemu na dany pocet procesoru spoctete pro vas algoritmus dynamicke delby prace celkovy pocet odeslanych zadosti o praci, prumer na 1 procesor a jejich uspesnost.
+%\item Mereni pro dany pocet procesoru a instanci problemu provedte 3x a pouzijte prumerne hodnoty.
+\item Z namerenych dat sestavte grafy zrychleni $S(n,p)$. Zjistete, zda a za jakych podminek
+doslo k superlinearnimu zrychleni a pokuste se je zduvodnit.
+\item Vyhodnodte komunikacni slozitost dynamickeho vyvazovani zateze a posudte
+vhodnost vami implementovaneho algoritmu pro hledani darce a deleni zasobniku pri reseni vaseho
+problemu. Posudte efektivnost a skalovatelnost algoritmu. Popiste nedostatky
+vasi implementace a navrhnete zlepseni.
+\item Empiricky stanovte 
+granularitu vasi implementace, tj., stupen paralelismu pro danou velikost reseneho
+problemu. Stanovte kriteria pro stanoveni mezi, za kterymi jiz neni
+ucinne rozkladat vypocet na mensi procesy, protoze by komunikacni
+naklady prevazily urychleni paralelnim vypoctem.
+
+\end{enumerate}
+
+\section{Literatura}
+
+\appendix
+
+\section{Navod pro vkladani grafu a obrazku do Texu}
+
+Nejjednodussi zpusob vytvoreni obrazku je pouzit sunovsky graficky editor xfig,
+ze ktrereho lze exportovat latex formaty (v poradi prosty latex, 
+latex s macry epic, eepic, eepicemu) a postscript formaty,
+uvedene poradi odpovida rustu komplikovanosti obrazku
+(postscript umi jakykoliv obrazek, prosta latex macra pouze jednoduche,
+epic makra neco mezi, je treba vyzkouset). Nasleduji priklady
+pro vsechny pripady. 
+
+Obrazek v postscriptu, vycentrovany a na celou sirku stranky, 
+s popisem a cislem. Vsimnete si, jak ridit velikost obrazku.
+% \begin{figure}[ht]
+% \epsfysize=3cm
+% \centerline{\epsfbox{VasObrazek.ps}}
+% \caption{Popis vaseho obrazku}
+% \label{labelvasehoobrazku}
+% \end{figure}
+
+Obrazek pouze vlozeny mezi radky textu, bez popisu a cislovani.\\
+% \epsfxsize=1cm
+% \rule{0pt}{0pt}\hfill\epsfbox{VasObrazek.ps}\hfill\rule{0pt}{0pt}
+
+Texovske obrazky maji pripony *.latex, *.epic, *.eepic, a *.eepicemu, respective. 
+% \begin{figure}[ht]
+% \begin{center}
+% \input VasObrazek.latex
+% \end{center}
+% \caption{Popis vaseho obrazku}
+% \label{l1}
+% \end{figure}
+Vypustenim zavorek {\tt figure} dostanete opet pouze ramecek 
+v textu bez cisla a popisu. 
+
+Takhle jednoduse muzete poskladat obrazky vedle sebe.
+% \begin{center}
+% \setlength{\unitlength}{0.1mm}\input VasObrazek.epic
+% \hglue 5mm 
+% \setlength{\unitlength}{0.15mm}\input VasObrazek.eepic
+% \hglue 5mm 
+% \setlength{\unitlength}{0.2mm}\input VasObrazek.eepicemu
+% \end{center}
+Ridit velikost texovskych obrazku lze prikazem
+\begin{verbatim}
+\setlength{\unitlength}{0.1mm}
+\end{verbatim}
+ktere meni meritko rastru obrazku, Tyto prikazy je ale soucasne 
+nutne vyhodit ze souboru, ktery xfig vygeneroval.
+
+Pro vytvareni grafu lze pouzit program gnuplot, ktery umi generovat postscriptovy soubor, ktery vlozite
+do Texu vyse uvedenym zpusobem.
+
+\end{document}
+
+
+
+
+
+
+
+
