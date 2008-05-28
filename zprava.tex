@@ -116,78 +116,31 @@ Instacemi byly 3 ruzne nahodne grafy se 70 uzly, kde 2 uzly maji stupen 30 a ost
 \begin{figure}[ht]
 \centerline{\includegraphics[width=\textwidth]{graph.pdf}}
 \caption{Graf relativniho zrychleni vypoctu}
-\label{labelvasehoobrazku}
+\label{graph}
 \end{figure}
 
-\begin{enumerate}
-\item Zvolte tri instance problemu s takovou velikosti vstupnich dat, pro ktere ma sekvencni 
-algoritmus casovou slozitost kolem 5, 10 a 15 minut.
-Pro mereni cas potrebny na cteni dat z disku a ulozeni na disk neuvazujte a zakomentujte
-ladici tisky, logy, zpravy a vystupy.
-\item Merte paralelni cas pri pouziti $i=2,\cdot,24$ procesoru na sitich Ethernet a InfiniBand.
-\item Z namerenych dat sestavte grafy zrychleni $S(n,p)$. Zjistete, zda a za jakych podminek
-doslo k superlinearnimu zrychleni a pokuste se je zduvodnit.
-\item Vyhodnodte komunikacni slozitost dynamickeho vyvazovani zateze a posudte
-vhodnost vami implementovaneho algoritmu pro hledani darce a deleni zasobniku pri reseni vaseho
-problemu. Posudte efektivnost a skalovatelnost algoritmu. Popiste nedostatky
-vasi implementace a navrhnete zlepseni.
-\item Empiricky stanovte 
-granularitu vasi implementace, tj., stupen paralelismu pro danou velikost reseneho
-problemu. Stanovte kriteria pro stanoveni mezi, za kterymi jiz neni
-ucinne rozkladat vypocet na mensi procesy, protoze by komunikacni
-naklady prevazily urychleni paralelnim vypoctem.
+\subsection{Vyhodnoceni}
+K superlinearnimu zrychleni nedoslo. Vysledky ukazuji, ze paralelni algoritmus byl vyhotoven
+kvalitne, v nejlepsim pripade je zpomaleni komunikaci mezi procesory a rozdelovanim prace
+jen 25\%.
 
-\end{enumerate}
+\begin{figure}[ht]
+\centerline{\includegraphics[width=\textwidth]{table-rel-per-cpu.pdf}}
+\caption{Relativni zrychleni vypoctu proti sekvencnimu algoritmu na pocet porcesoru}
+\label{table-rel-per-cpu}
+\end{figure}
+
+\begin{figure}[ht]
+\centerline{\includegraphics[width=\textwidth]{graph-per-cpu.pdf}}
+\caption{Graf relativniho zrychleni vypoctu na pocet porcesoru}
+\label{graph-per-cpu}
+\end{figure}
 
 \section{Literatura}
 
-\appendix
-
-\section{Navod pro vkladani grafu a obrazku do Texu}
-
-Nejjednodussi zpusob vytvoreni obrazku je pouzit sunovsky graficky editor xfig,
-ze ktrereho lze exportovat latex formaty (v poradi prosty latex, 
-latex s macry epic, eepic, eepicemu) a postscript formaty,
-uvedene poradi odpovida rustu komplikovanosti obrazku
-(postscript umi jakykoliv obrazek, prosta latex macra pouze jednoduche,
-epic makra neco mezi, je treba vyzkouset). Nasleduji priklady
-pro vsechny pripady. 
-
-Obrazek v postscriptu, vycentrovany a na celou sirku stranky, 
-s popisem a cislem. Vsimnete si, jak ridit velikost obrazku.
-
-Obrazek pouze vlozeny mezi radky textu, bez popisu a cislovani.\\
-% \epsfxsize=1cm
-% \rule{0pt}{0pt}\hfill\epsfbox{VasObrazek.ps}\hfill\rule{0pt}{0pt}
-
-Texovske obrazky maji pripony *.latex, *.epic, *.eepic, a *.eepicemu, respective. 
-% \begin{figure}[ht]
-% \begin{center}
-% \input VasObrazek.latex
-% \end{center}
-% \caption{Popis vaseho obrazku}
-% \label{l1}
-% \end{figure}
-Vypustenim zavorek {\tt figure} dostanete opet pouze ramecek 
-v textu bez cisla a popisu. 
-
-Takhle jednoduse muzete poskladat obrazky vedle sebe.
-% \begin{center}
-% \setlength{\unitlength}{0.1mm}\input VasObrazek.epic
-% \hglue 5mm 
-% \setlength{\unitlength}{0.15mm}\input VasObrazek.eepic
-% \hglue 5mm 
-% \setlength{\unitlength}{0.2mm}\input VasObrazek.eepicemu
-% \end{center}
-Ridit velikost texovskych obrazku lze prikazem
-\begin{verbatim}
-\setlength{\unitlength}{0.1mm}
-\end{verbatim}
-ktere meni meritko rastru obrazku, Tyto prikazy je ale soucasne 
-nutne vyhodit ze souboru, ktery xfig vygeneroval.
-
-Pro vytvareni grafu lze pouzit program gnuplot, ktery umi generovat postscriptovy soubor, ktery vlozite
-do Texu vyse uvedenym zpusobem.
+\begin{itemize}
+	\item Podklady na starankach predmetu (https://service.felk.cvut.cz/courses/X36PAR/)
+\end{itemize}
 
 \end{document}
 
