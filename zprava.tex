@@ -59,32 +59,65 @@ provadi, pokud nelze zadny uzel odebrat, aniz by se narusilo pokryti.
 
 Dolni mez neni znama.
 
-Trivialni horni mez |C| je n/2.
-\subsection{Paralelni algoritmus:}
-Paralelni algoritmus je typu PBB-DFS-V.
+Trivialni horni mez $|$C$|$ je n/2.
 
-Popiste problem, ktery vas program resi. Jako vychozi pouzijte text
-zadani, ktery rozsirte o presne vymezeni vsech odchylek, ktere jste
-vuci zadani behem implementace provedli 
-(napr.  upravy heuristicke funkce, organizace zasobniku,
-apod.). Zminte i pripadne i takove prvky algoritmu, ktere v zadani
-nebyly specifikovany, ale ktere se ukazaly jako dulezite.  Dale
-popiste vstupy a vystupy algoritmu (format vstupnich a vystupnich
-dat). Uvedte tabulku namerenych casu sekvencniho algoritmu pro ruzne
-velka data.
+Na zacatku algoritmu je nactena matice incidence grafu. Na zasobnik se vzdy ukladaji tato data:
+
+\begin{itemize}
+	\item cislo uzlu s kterym prave pracujeme
+	\item to, zda odebirame uzel, nebo ponechavame uzel
+	\item pocet zatim vybranych uzlu
+	\item bitove pole vybranych uzlu
+	\item pole hran s pocty uzlu s kterymi inciduji
+\end{itemize}
+
+Pocatecni stav algoritmu je takovy, ze jsou vybrany vsechny uzly. Pak algoritmus postupne zkousi
+odebrat ruzne kombinace uzlu, ovsem vzdy tak, aby hrana kazda hrana incidovala alespon
+s jednim uzlem (proto zasobnik obsahuje pole poctu uzlu incidujicich s jednotlivymi hranami).
+
+Nejlepsi reseni se ukladaji do globalni promene a po projiti vsech smysluplnych kombinaci
+odebrani uzlu se nejlepsi reseni vypise.
 
 \section{Popis paralelniho algoritmu a jeho implementace v MPI}
 
-Popiste paralelni algoritmus, opet vyjdete ze zadani a presne vymezte
-odchylky, zvlaste u algoritmu pro vyvazovani zateze, hledani darce, ci
-ukonceni vypoctu.  Popiste a vysvetlete strukturu celkoveho
-paralelniho algoritmu na urovni procesuu v MPI a strukturu kodu
-jednotlivych procesu. Napr. jak je naimplemtovana smycka pro cinnost
-procesu v aktivnim stavu i v stavu necinnosti. Jake jste zvolili
-konstanty a parametry pro skalovani algoritmu. Struktura a semantika
-prikazove radky pro spousteni programu.
+Paralelni algoritmus je typu PBB-DFS-V. Princip algoritmu je stejny jako u sekvenciho reseni.
+
+Na zacatku proces 0 nacte graf a rozesle ho ostatnim procesum. Prace se mezi procesi
+rozesila formou polozky zasobniku. Po rozeslani grafu zacne proces 0 pocitat
+a kdyz ma na zasobniku dostatecny pocet polozek pro vsechny procesy,
+tak jim rozesle praci.
+
+Behem vypoctu se muze stat, ze nektery proces dopocita svoje reseni. V tom pripade
+se zepta sveho souseda, jestli mu nepreda cast prace a takto se pta v kruhu
+dal, dokavad nejakou neziska.
+
+Ukonceni paralelniho vypoctu je provedeno peskovymi algoritmem.
 
 \section{Namerene vysledky a vyhodnoceni}
+
+\subsection{Instance}
+
+Instacemi byly 3 ruzne nahodne grafy se 70 uzly, kde 2 uzly maji stupen 30 a ostatni mensi.
+
+\subsection{Namerene vysledky}
+
+\begin{figure}[ht]
+\centerline{\includegraphics[width=\textwidth]{table-abs.pdf}}
+\caption{Popis vaseho obrazku}
+\label{table-abs}
+\end{figure}
+
+\begin{figure}[ht]
+\centerline{\includegraphics[width=\textwidth]{table-rel.pdf}}
+\caption{Popis vaseho obrazku}
+\label{table-rel}
+\end{figure}
+
+\begin{figure}[ht]
+\centerline{\includegraphics[width=\textwidth]{graph.pdf}}
+\caption{Popis vaseho obrazku}
+\label{labelvasehoobrazku}
+\end{figure}
 
 \begin{enumerate}
 \item Zvolte tri instance problemu s takovou velikosti vstupnich dat, pro ktere ma sekvencni 
@@ -122,11 +155,6 @@ pro vsechny pripady.
 
 Obrazek v postscriptu, vycentrovany a na celou sirku stranky, 
 s popisem a cislem. Vsimnete si, jak ridit velikost obrazku.
-\begin{figure}[ht]
-\centerline{\includegraphics[width=\textwidth]{graph.pdf}}
-\caption{Popis vaseho obrazku}
-\label{labelvasehoobrazku}
-\end{figure}
 
 Obrazek pouze vlozeny mezi radky textu, bez popisu a cislovani.\\
 % \epsfxsize=1cm
