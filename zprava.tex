@@ -1,9 +1,29 @@
-\documentstyle[epsf,epic,eepic,eepicemu]{article} \oddsidemargin=-5mm
+\documentclass[a4paper]{article}
+\usepackage{ifpdf}
+\oddsidemargin=-5mm
 \evensidemargin=-5mm\marginparwidth=.08in \marginparsep=.01in
 \marginparpush=5pt\topmargin=-15mm\headheight=12pt
-\headsep=25pt\footheight=12pt \footskip=30pt\textheight=25cm
+\headsep=25pt
+\footskip=30pt
+\textheight=25cm
 \textwidth=17cm\columnsep=2mm
 \columnseprule=1pt\parindent=15pt\parskip=2pt
+\ifpdf
+  % one of these two:
+  \usepackage[pdftex]{graphicx}  % note the x at the end
+  %\usepackage[pdftex]{epsfig}
+
+  % hyperref should be the last package loaded:
+  \usepackage[pdftex]{hyperref}
+\else
+  % one of these two:
+  \usepackage[dvips]{graphicx}  % note the x at the end
+  %\usepackage[dvips]{epsfig}
+
+  % make the command \href from hyperref available as a 'print only'
+  \newcommand{\href}[2]{#2}
+\fi
+
 
 \begin{document}
 \begin{center}
@@ -16,6 +36,32 @@
 \end{center}
 
 \section{Definice problemu a popis sekvencniho algoritmu}
+
+\subsection{Vstupni data}
+\begin{itemize}
+	\item n = prirozene cislo
+	\item k = prirozene cislo radu jednotek
+	\item G = neorietovany neohodnoceny graf o n uzlech a stupni nejvyse k (zvolte standardni
+	      reprezentaci s ocislovanymi uzly 1,...,n, napr. seznam sousedu nebo matici sousednosti).
+	      Graf G nemusi byt souvisly.
+\end{itemize}
+\subsection{Ukol:}
+Nalezt minimalni podmnozinu uzlu C, ktera pokryva kazdou hranu, tzn. kazda hrana je incidentni
+s aspon s jednim uzlem z C.
+\subsection{Vystup algoritmu:}
+Vypis prvku mnoziny C (reseni existuje vzdy).
+\subsection{Sekvencni algoritmus:}
+Sekvencni algoritmus je BB-DFS s omezenou hloubkou prohledavaneho prostoru. Stav je dan obsahem
+mnoziny C. Stav je pripustny, je-li C pokryti. Cena, kterou minimalizujeme, je $|$C$|$.
+Pokryti C lze budovat bud pridavanim uzlu pocinaje prazdnou mnozinou, kdy se provadi navrat,
+pokud jsou vsechny hrany pokryty, nebo odebiranim uzlu z nadbytecne velkeho pokryti, kdy se navrat
+provadi, pokud nelze zadny uzel odebrat, aniz by se narusilo pokryti.
+
+Dolni mez neni znama.
+
+Trivialni horni mez |C| je n/2.
+\subsection{Paralelni algoritmus:}
+Paralelni algoritmus je typu PBB-DFS-V.
 
 Popiste problem, ktery vas program resi. Jako vychozi pouzijte text
 zadani, ktery rozsirte o presne vymezeni vsech odchylek, ktere jste
@@ -46,8 +92,6 @@ algoritmus casovou slozitost kolem 5, 10 a 15 minut.
 Pro mereni cas potrebny na cteni dat z disku a ulozeni na disk neuvazujte a zakomentujte
 ladici tisky, logy, zpravy a vystupy.
 \item Merte paralelni cas pri pouziti $i=2,\cdot,24$ procesoru na sitich Ethernet a InfiniBand.
-%\item Pri mereni kazde instance problemu na dany pocet procesoru spoctete pro vas algoritmus dynamicke delby prace celkovy pocet odeslanych zadosti o praci, prumer na 1 procesor a jejich uspesnost.
-%\item Mereni pro dany pocet procesoru a instanci problemu provedte 3x a pouzijte prumerne hodnoty.
 \item Z namerenych dat sestavte grafy zrychleni $S(n,p)$. Zjistete, zda a za jakych podminek
 doslo k superlinearnimu zrychleni a pokuste se je zduvodnit.
 \item Vyhodnodte komunikacni slozitost dynamickeho vyvazovani zateze a posudte
@@ -78,12 +122,11 @@ pro vsechny pripady.
 
 Obrazek v postscriptu, vycentrovany a na celou sirku stranky, 
 s popisem a cislem. Vsimnete si, jak ridit velikost obrazku.
-% \begin{figure}[ht]
-% \epsfysize=3cm
-% \centerline{\epsfbox{VasObrazek.ps}}
-% \caption{Popis vaseho obrazku}
-% \label{labelvasehoobrazku}
-% \end{figure}
+\begin{figure}[ht]
+\centerline{\includegraphics[width=\textwidth]{graph.pdf}}
+\caption{Popis vaseho obrazku}
+\label{labelvasehoobrazku}
+\end{figure}
 
 Obrazek pouze vlozeny mezi radky textu, bez popisu a cislovani.\\
 % \epsfxsize=1cm
